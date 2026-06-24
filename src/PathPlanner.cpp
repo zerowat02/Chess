@@ -9,6 +9,8 @@ int PathPlanner::getHValue(GridPos from, GridPos to)
 
 vector<GridPos> PathPlanner::tracePath(Node nodes[Board::ROW][Board::COL],GridPos dest)
 {
+
+    
     vector<GridPos> path;
 
     GridPos current = dest;
@@ -30,6 +32,28 @@ vector<GridPos> PathPlanner::tracePath(Node nodes[Board::ROW][Board::COL],GridPo
 
 vector<GridPos> PathPlanner::findPath(Board &board, GridPos src, GridPos dest)
 {
+    // If the source is out of range
+    if (board.isValid(src) == false) {
+        // Source is invalid
+        return{};
+    }
+
+    // If the destination is out of range
+    if (board.isValid(dest) == false) {
+        // Destination is invalid
+        return{};
+    }
+
+    // If the destination cell is already occupied by another piece
+    if (board.isOccupied(dest)== true) {
+        //the destination is blocked
+        return{};
+    }
+
+    // If the destination cell is the same as source cell
+    if (board.isOccupied(dest)== true) {
+        return{src};
+    }
 
 
     set<OpenNode> visitCells;

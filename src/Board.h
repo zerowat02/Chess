@@ -1,3 +1,4 @@
+#pragma once
 #include<CoordinateTypes.h>
 
 using namespace std;

@@ -1,7 +1,9 @@
+#pragma once
 #include<Board.h>
 #include<RobotConfig.h>
 #include<Kinematics.h>
 #include<PathPlanner.h>
+#include<MotionController.h>
 
 using namespace std;
 

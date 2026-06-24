@@ -1,5 +1,7 @@
+#pragma once
 #include<RobotConfig.h>
-#include<Coordinatetypes.h>
+#include<CoordinateTypes.h>
+#include<vector>
 using namespace std;
 
 class Kinematics
@@ -16,12 +18,10 @@ public:
 
     vector <StepPos> GridPathTOSteps(vector<GridPos> gridPath);
 
-    StepPos GridMoveToSteps(GridPos from, GridPos to)
+    StepPos GridMoveToSteps(GridPos gridPos)
     {
-        int dx = to.first - from.first;
-        int dy = to.second - from.second;
         return {
-           dx*cellSize, dy*cellSize
+           gridPos.first*cellSize+config.OffsetX, gridPos.second*cellSize+config.OffsetY
         };
     }
-};
+}; 
