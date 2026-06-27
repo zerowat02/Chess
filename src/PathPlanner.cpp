@@ -29,7 +29,6 @@ vector<GridPos> PathPlanner::tracePath(Node nodes[Board::ROW][Board::COL],GridPo
     return path;
 }
 
-
 vector<GridPos> PathPlanner::findPath(Board &board, GridPos src, GridPos dest)
 {
     // If the source is out of range

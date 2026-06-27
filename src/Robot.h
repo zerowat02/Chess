@@ -1,12 +1,15 @@
 #pragma once
 #include<Board.h>
 #include<RobotConfig.h>
-#include<Kinematics.h>
+#include<StepConverter.h>
 #include<PathPlanner.h>
 #include<MotionController.h>
+#include<NotationParser.h>
+#include <string>
 
 using namespace std;
 
+enum class MoveResult { OK, InvalidNotation, GraveyardFull, PathFindingError};
 
 class Robot
 {
@@ -14,12 +17,13 @@ private:
     Board board;
     PathPlanner planner;
     MotionController motion;
-    Kinematics kinematics;
-
+    StepConverter stepConverter;
     GridPos currentPosition;
 
+    MoveResult movePiece(GridPos src, GridPos dest);
+
 public:
-    void movePiece(GridPos src, GridPos dest);
+    MoveResult movePiece(std::string UCImove);
 };
 
 

@@ -4,7 +4,8 @@
 #include<vector>
 using namespace std;
 
-class Kinematics
+
+class StepConverter
 {
 private:
     RobotConfig config;
@@ -13,8 +14,8 @@ private:
 public:
 
 
-    Kinematics(RobotConfig cfg)
-        : config(cfg), cellSize(cfg.cellSize * cfg.stepsPerMm) {}
+    StepConverter(RobotConfig cfg)
+        : config(cfg), cellSize((cfg.cellSize * cfg.stepsPerMm)/2) {} // cellSize is halfed because movement is calculated by half cells (for movement inbetween cells)
 
     vector <StepPos> GridPathTOSteps(vector<GridPos> gridPath);
 
