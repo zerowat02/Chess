@@ -2,6 +2,7 @@
 #include<CoordinateTypes.h>
 #include<vector>
 #include <string>
+#include<Logger.h>
 using namespace std;
 
 

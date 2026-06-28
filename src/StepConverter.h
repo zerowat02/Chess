@@ -2,6 +2,7 @@
 #include<RobotConfig.h>
 #include<CoordinateTypes.h>
 #include<vector>
+#include<Logger.h>
 using namespace std;
 
 
@@ -19,10 +20,6 @@ public:
 
     vector <StepPos> GridPathTOSteps(vector<GridPos> gridPath);
 
-    StepPos GridMoveToSteps(GridPos gridPos)
-    {
-        return {
-           gridPos.first*cellSize+config.OffsetX, gridPos.second*cellSize+config.OffsetY
-        };
-    }
+    StepPos GridMoveToSteps(GridPos gridPos);
+    
 }; 

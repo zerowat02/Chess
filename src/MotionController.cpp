@@ -1,5 +1,18 @@
 #include "MotionController.h"
 
+
+void MotionController::enable()
+{
+    digitalWrite(EN_PIN_X,LOW);
+    digitalWrite(EN_PIN_Y,LOW);
+}
+
+void MotionController::disable()
+{
+    digitalWrite(EN_PIN_X,HIGH);
+    digitalWrite(EN_PIN_Y,HIGH);
+}
+
 MotionController::MotionController()
     : motorX(AccelStepper::DRIVER, STEP_PIN_X, DIR_PIN_X),
       motorY(AccelStepper::DRIVER, STEP_PIN_Y, DIR_PIN_Y)
@@ -10,6 +23,9 @@ MotionController::MotionController()
     motorY.setAcceleration(ACCEL);
     gantry.addStepper(motorX);
     gantry.addStepper(motorY);
+    pinMode(EN_PIN_X,OUTPUT);
+    pinMode(EN_PIN_Y,OUTPUT);
+    disable();
 }
 
 void MotionController::setSpeed(AccelStepper& motor, Speed speed) {

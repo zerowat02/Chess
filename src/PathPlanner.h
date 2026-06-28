@@ -6,6 +6,8 @@
 #include <cfloat>
 #include <cmath>
 #include<algorithm>
+#include<Logger.h>
+
 
 struct Node{
     GridPos parent = {-1,-1};
@@ -32,6 +34,7 @@ class PathPlanner
 {
     int getHValue(GridPos form, GridPos to);
     vector<GridPos> tracePath(Node nodes[Board::ROW][Board::COL], GridPos dest);
+    void loggPath(vector<GridPos> path);
 public:
     vector<GridPos> findPath(Board& board, GridPos form, GridPos to);
 };

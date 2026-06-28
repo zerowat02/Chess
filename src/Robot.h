@@ -5,6 +5,7 @@
 #include<PathPlanner.h>
 #include<MotionController.h>
 #include<NotationParser.h>
+#include<Logger.h>
 #include <string>
 
 using namespace std;
@@ -23,7 +24,9 @@ private:
     MoveResult movePiece(GridPos src, GridPos dest);
 
 public:
+    Robot(RobotConfig cfg) : stepConverter(cfg) {}
     MoveResult movePiece(std::string UCImove);
+    void home();
 };
 
 

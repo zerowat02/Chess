@@ -5,11 +5,11 @@
 
 constexpr int STEP_PIN_X = 22;
 constexpr int DIR_PIN_X  = 23;
-constexpr int EN_PIN_X   = 0;
+constexpr int EN_PIN_X   = 32;
 
 constexpr int STEP_PIN_Y = 18;
 constexpr int DIR_PIN_Y  = 19;
-constexpr int EN_PIN_Y   = 0;
+constexpr int EN_PIN_Y   = 33;
 
 constexpr int MAX_SPEED = 1000;
 constexpr int ACCEL     = 500;
@@ -24,6 +24,9 @@ private:
 
 public:
     MotionController();
+
+    void enable();
+    void disable();
 
     void setSpeed(AccelStepper& motor, Speed speed);
     void setAccel(AccelStepper& motor, int accel);

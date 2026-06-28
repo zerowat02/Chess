@@ -26,31 +26,44 @@ vector<GridPos> PathPlanner::tracePath(Node nodes[Board::ROW][Board::COL],GridPo
     }
     
     reverse(path.begin(), path.end());
+
+    loggPath(path);
     return path;
+}
+
+void PathPlanner::loggPath(vector<GridPos> path)
+{
+    Logger::debug("PathPlanner", "Path: ");
+    for(GridPos pos : path){
+        Logger::debug("PathPlanner", "(%d,%d)", pos.first,pos.second);
+    }    
+    Logger::debug("PathPlanner", "end Path");
+
 }
 
 vector<GridPos> PathPlanner::findPath(Board &board, GridPos src, GridPos dest)
 {
     // If the source is out of range
     if (board.isValid(src) == false) {
-        // Source is invalid
+        Logger::debug("PathPlanner", "src(%d,%d) is an invalid position)", src.first, src.second);
         return{};
     }
 
     // If the destination is out of range
     if (board.isValid(dest) == false) {
-        // Destination is invalid
+        Logger::debug("PathPlanner", "dest(%d,%d) is an invalid position)", dest.first, dest.second);
         return{};
     }
 
     // If the destination cell is already occupied by another piece
     if (board.isOccupied(dest)== true) {
-        //the destination is blocked
+        Logger::debug("PathPlanner", "dest(%d,%d) is already occupied)", dest.first, dest.second);
         return{};
     }
 
     // If the destination cell is the same as source cell
-    if (board.isOccupied(dest)== true) {
+    if (src == dest) {
+        Logger::debug("PathPlanner", "dest(%d,%d) and src(%d,%d) are the same", dest.first, dest.second, src.first, src.second);
         return{src};
     }
 
@@ -58,14 +71,19 @@ vector<GridPos> PathPlanner::findPath(Board &board, GridPos src, GridPos dest)
     set<OpenNode> visitCells;
     visitCells.insert({0.0f, src});
 
-    Node nodes[Board::ROW][Board::COL];
+    static Node nodes[Board::ROW][Board::COL];
+    static bool visitedCells[Board::ROW][Board::COL];
+
+    for (int i = 0; i < Board::ROW; i++)
+        for (int j = 0; j < Board::COL; j++) {
+            nodes[i][j]       = Node{};
+            visitedCells[i][j] = false;
+        }
 
     nodes[src.first][src.second].parent = src;
     nodes[src.first][src.second].f = 0;
     nodes[src.first][src.second].g = 0;
     nodes[src.first][src.second].h = 0;
-
-    bool visitedCells[Board::ROW][Board::COL] = {};
 
     while (!visitCells.empty())
     {

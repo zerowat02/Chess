@@ -1,28 +1,34 @@
 #include <Arduino.h>
-#include "MotionController.h"
+#include "Robot.h"
+#include "NetworkManager.h"
+#include "NetworkConfig.h"
+#include "secrets.h"
 
-MotionController mc;
+// TODO: calibrate cellSize (mm per cell) and stepsPerMm for your hardware
+Robot robot(RobotConfig(40, 1));
+NetworkManager net(
+    WIFI_SSID, WIFI_PASSWORD,
+    MQTT_BROKER, MQTT_PORT,
+    MQTT_USERNAME, MQTT_PASSWORD,
+    MQTT_PUBLISH_TOPIC, MQTT_SUBSCRIBE_TOPIC
+);
 
-void setup() {
+void setup()
+{
     Serial.begin(115200);
-    Serial.printf("STEP_PIN_X: %d, DIR_PIN_X: %d, STEP_PIN_Y: %d;DIR_PIN_Y: %d\n",STEP_PIN_X, DIR_PIN_X, STEP_PIN_Y, DIR_PIN_Y);
+    robot.home();
+    net.setMoveCallback([](const std::string& uciMove) {
+        Serial.printf("Move received: %s\n", uciMove.c_str());
+        MoveResult result = robot.movePiece(uciMove);
+        if (result != MoveResult::OK)
+            Serial.printf("Move failed: %d\n", static_cast<int>(result));
+    });
 
-    Serial.println("TEST 1: X axis — 200 steps forward");
-    mc.movePiece({200, 0}, Speed::SLOW);
-    delay(500);
-
-    Serial.println("TEST 2: Y axis — 200 steps forward");
-    mc.movePiece({200, 200}, Speed::SLOW);
-    delay(500);
-
-    Serial.println("TEST 3: diagonal — 400 steps on both axes");
-    mc.movePiece({400, 400}, Speed::SLOW);
-    delay(500);
-
-    Serial.println("TEST 4: home");
-    mc.home();
-
-    Serial.println("DONE");
+    net.begin();
+    Serial.println("Ready — waiting for moves");
 }
 
-void loop() {}
+void loop()
+{
+    net.loop();
+}
