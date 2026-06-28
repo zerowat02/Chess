@@ -53,6 +53,9 @@ MoveResult Robot::movePiece(std::string UCImove)
     motion.enable();
     MoveResult result = movePiece(src, dest);
     motion.disable();
+    if(NotationParser::isCastling(UCImove)){
+        return movePiece(NotationParser::getTowerCastlingMoves(UCImove));
+    }
     return result;
 }
 
