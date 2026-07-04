@@ -1,16 +1,9 @@
 #pragma once
 #include<CoordinateTypes.h>
+#include<Piece.h>
 
 using namespace std;
 
-enum class chessPiece { None, Pawn, Rook, Knight, Bishop, Queen, King };
-enum class PieceColor { White, Black };
-
-
-struct Cell{
-    chessPiece piece;
-    PieceColor color;
-};
 
 class Board{
     public:
@@ -19,7 +12,7 @@ class Board{
         static constexpr int GRAVEYARD_LEFT_CELL_END   = 3;   // rightmost left graveyard col
         static constexpr int GRAVEYARD_RIGHT_CELL_START = 19;  // leftmost right graveyard col
     private:
-        Cell grid[ROW][COL];
+        Piece grid[ROW][COL];
     public:
         bool isAdiacientToOtherPiece(GridPos pos);
         bool isOccupied(GridPos pos);
@@ -29,8 +22,9 @@ class Board{
         bool isCell(GridPos pos){
             return(isValid(pos) && pos.first%2 == 0 && pos.second%2 == 0);
         }
-        Cell getCell(GridPos pos);
+        Piece getPiece(GridPos pos);
         GridPos nextFreeGraveyardSpot(PieceColor color);
+        GridPos getPiecePositioninGraveyard(Piece piece);
 };
 
 

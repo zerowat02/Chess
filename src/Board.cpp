@@ -22,7 +22,7 @@ bool Board::isOccupied(GridPos pos)
     return false; // stub
 }
 
-Cell Board::getCell(GridPos pos)
+Piece Board::getPiece(GridPos pos)
 {
     return grid[pos.first][pos.second];
 }
@@ -34,7 +34,7 @@ GridPos Board::nextFreeGraveyardSpot(PieceColor color)
     GridPos cell;
     for(int col = startCol; col<endCol; col++){
         for(int row = 0; row<ROW; row++){
-            cell = {row,col};
+            cell = {row, col};
             if(isCell(cell) && !isOccupied(cell)){
                 return cell;
             }
@@ -42,8 +42,23 @@ GridPos Board::nextFreeGraveyardSpot(PieceColor color)
     }
    
     // graveyard full
-    return GridPos();
+    return {-1,-1};
 }
 
-
-
+GridPos Board::getPiecePositioninGraveyard(Piece piece)
+{
+    int startCol = (piece.color == PieceColor::Black) ? 0 : GRAVEYARD_RIGHT_CELL_START;
+    int endCol = (piece.color == PieceColor::Black) ?  GRAVEYARD_LEFT_CELL_END: COL;
+    GridPos cell;
+    for(int col = startCol; col<endCol; col++){
+        for(int row = 0; row<ROW; row++){
+            cell = {row, col};
+            if(piece == grid[row][col]){
+                return cell;
+            }
+        }
+    }
+   
+    // graveyard full
+    return {-1,-1};
+}

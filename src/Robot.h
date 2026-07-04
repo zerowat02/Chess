@@ -10,7 +10,7 @@
 
 using namespace std;
 
-enum class MoveResult { OK, InvalidNotation, GraveyardFull, PathFindingError};
+enum class MoveResult { OK, InvalidNotation, GraveyardFull, PathFindingError, PieceNotFound};
 
 class Robot
 {
@@ -22,7 +22,9 @@ private:
     GridPos currentPosition;
 
     MoveResult movePiece(GridPos src, GridPos dest);
-
+    MoveResult handlePromotion(GridPos src,GridPos dest, Piece piece);
+    MoveResult movePieceToGraveyard(GridPos src);
+    MoveResult handleEnPassant(std::string UCImove);
 public:
     Robot(RobotConfig cfg) : stepConverter(cfg) {}
     MoveResult movePiece(std::string UCImove);

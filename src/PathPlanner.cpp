@@ -45,13 +45,13 @@ vector<GridPos> PathPlanner::findPath(Board &board, GridPos src, GridPos dest)
 {
     // If the source is out of range
     if (board.isValid(src) == false) {
-        Logger::debug("PathPlanner", "src(%d,%d) is an invalid position)", src.first, src.second);
+        Logger::debug("PathPlanner", "src(%d,%d) is an invalid position", src.first, src.second);
         return{};
     }
 
     // If the destination is out of range
     if (board.isValid(dest) == false) {
-        Logger::debug("PathPlanner", "dest(%d,%d) is an invalid position)", dest.first, dest.second);
+        Logger::debug("PathPlanner", "dest(%d,%d) is an invalid position", dest.first, dest.second);
         return{};
     }
 
