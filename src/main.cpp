@@ -3,8 +3,10 @@
 #include "NetworkManager.h"
 #include "NetworkConfig.h"
 #include "secrets.h"
+#include "Electromagnet.h" // remove
 
 // TODO: calibrate cellSize (mm per cell) and stepsPerMm for your hardware
+Electromagnet electromagnet; // remove
 Robot robot(RobotConfig(40, 1));
 NetworkManager net(
     WIFI_SSID, WIFI_PASSWORD,
@@ -30,5 +32,17 @@ void setup()
 
 void loop()
 {
+    // electromagnet.enable(); // remove
+    // Serial.printf("Electromagnet enabled\n"); // remove
+    // electromagnet.setPolarity(Polarity::NORTH); // remove
+    // Serial.printf("Electromagnet polarity set to NORTH\n"); // remove
+    // electromagnet.setStrength(Strength::STRONG); // remove
+    // Serial.printf("Electromagnet strength set to STRONG\n"); // remove
+    // delay(7000); // remove
+    // electromagnet.setPolarity(Polarity::SOUTH); // remove
+    // Serial.printf("Electromagnet polarity set to SOUTH\n"); // remove
+    // delay(7000); // remove
+    // electromagnet.disable(); // remove
+    Serial.printf("Electromagnet disabled\n"); // remove
     net.loop();
 }

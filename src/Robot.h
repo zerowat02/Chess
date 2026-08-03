@@ -4,6 +4,7 @@
 #include<StepConverter.h>
 #include<PathPlanner.h>
 #include<MotionController.h>
+#include<Electromagnet.h>
 #include<NotationParser.h>
 #include<Logger.h>
 #include <string>
